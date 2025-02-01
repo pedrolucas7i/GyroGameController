@@ -15,7 +15,7 @@ mpu = adafruit_mpu6050.MPU6050(i2c)
 keyboard = Keyboard(usb_hid.devices)
 
 # Esperar 2 segundos antes de iniciar
-time.sleep(2)
+time.sleep(5)
 
 # Loop principal
 while True:
