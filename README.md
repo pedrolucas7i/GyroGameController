@@ -26,7 +26,7 @@ This project implements a game control system using the **Raspberry Pi Pico / Ra
    - Copy the libraries from the project folder `lib\9.x` to the `lib/` folder on the Pico.
 
 4. **Run the code**:
-   - Save and place the Python code (`.py`) at the root of the Pico.
+   - Save and place the Python code (`run.py`) at the root of the Pico.
    - Restart the device (unplug and plug the USB back in) to start the controller.
 
 ## Usage
