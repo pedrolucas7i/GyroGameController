@@ -39,4 +39,4 @@ while True:
     keyboard.release(Keycode.D)
     keyboard.release(Keycode.W)
     keyboard.release(Keycode.S)
-    time.sleep(0.05)
+    time.sleep(0.12)
