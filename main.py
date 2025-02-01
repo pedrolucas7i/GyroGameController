@@ -28,17 +28,15 @@ while True:
         keyboard.press(Keycode.D)
     elif angle_x < -20:
         keyboard.press(Keycode.A)
-    else:
-        keyboard.release(Keycode.A)
-        keyboard.release(Keycode.D)
-
+    
     # Movimento vertical (Eixo Y)
     if angle_y > 20:
         keyboard.press(Keycode.W)
     elif angle_y < -20:
         keyboard.press(Keycode.S)
-    else:
-        keyboard.release(Keycode.W)
-        keyboard.release(Keycode.S)
     
-    time.sleep(0.01)
+    keyboard.release(Keycode.A)
+    keyboard.release(Keycode.D)
+    keyboard.release(Keycode.W)
+    keyboard.release(Keycode.S)
+    time.sleep(0.05)
