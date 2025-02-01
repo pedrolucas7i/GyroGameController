@@ -14,7 +14,7 @@ mpu = adafruit_mpu6050.MPU6050(i2c)
 # Configurações USB HID
 keyboard = Keyboard(usb_hid.devices)
 
-# Esperar 2 segundos antes de iniciar
+# Esperar 5 segundos antes de iniciar
 time.sleep(5)
 
 # Loop principal
@@ -28,15 +28,12 @@ while True:
         keyboard.press(Keycode.D)
     elif angle_x < -20:
         keyboard.press(Keycode.A)
-    
-    # Movimento vertical (Eixo Y)
-    if angle_y > 20:
+    elif angle_y > 20:
         keyboard.press(Keycode.W)
     elif angle_y < -20:
         keyboard.press(Keycode.S)
+    else:
+        time.sleep(0.01)
+        keyboard.release_all()
     
-    keyboard.release(Keycode.A)
-    keyboard.release(Keycode.D)
-    keyboard.release(Keycode.W)
-    keyboard.release(Keycode.S)
-    time.sleep(0.12)
+    time.sleep(0.01)
