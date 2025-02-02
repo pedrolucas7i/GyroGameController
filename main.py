@@ -23,8 +23,19 @@ while True:
     angle_x = math.atan2(accel_y, accel_z) * (180 / math.pi)
     angle_y = math.atan2(accel_x, accel_z) * (180 / math.pi)
 
-    # Movimento horizontal (Eixo X)
-    if angle_x > 20:
+    if angle_x > 20 and angle_y > 20:
+        keyboard.press(Keycode.D)
+        keyboard.press(Keycode.W)
+    elif angle_x > 20 and angle_y < -20:
+        keyboard.press(Keycode.D)
+        keyboard.press(Keycode.S)
+    elif angle_x < -20 and angle_y > 20:
+        keyboard.press(Keycode.A)
+        keyboard.press(Keycode.W)
+    elif angle_x < -20 and angle_y < -20:
+        keyboard.press(Keycode.A)
+        keyboard.press(Keycode.S)
+    elif angle_x > 20:
         keyboard.press(Keycode.D)
     elif angle_x < -20:
         keyboard.press(Keycode.A)
@@ -32,8 +43,6 @@ while True:
         keyboard.press(Keycode.W)
     elif angle_y < -20:
         keyboard.press(Keycode.S)
-    else:
-        time.sleep(0.01)
-        keyboard.release_all()
-    
-    time.sleep(0.01)
+
+        
+    keyboard.release_all()
