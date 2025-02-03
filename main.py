@@ -1,6 +1,7 @@
 import time
 import board
 import busio
+import digitalio
 import math
 import usb_hid
 import adafruit_mpu6050
@@ -13,17 +14,28 @@ i2c = busio.I2C(board.GP27, board.GP26)
 mpu = adafruit_mpu6050.MPU6050(i2c)
 
 # USB HID Configuration
-keyboard = Keyboard(usb_hid.devices)
-mouse = Mouse(usb_hid.devices)
+try:
+    devices = list(usb_hid.devices)
+    keyboard = Keyboard(devices)
+    mouse = Mouse(devices)
+    print("HID Devices Initialized")
+except Exception as e:
+    print("HID Error:", e)
+
 
 # Stability Parameters
 ANGLE_THRESHOLD = 20  # Minimum angle to activate keys
 DEADZONE = 5          # Dead zone to prevent small tremors
 SLEEP_TIME = 0.025    # Time between readings
-MOUSE_SENSITIVITY = 20  # Sensitivity multiplier for mouse movement
+MOUSE_SENSITIVITY = 30  # Sensitivity multiplier for mouse movement
+GYRO_THRESHOLD = 0.5  # Ignore small gyro drifts
 
 # Last pressed keys
 last_keys = set()
+
+aim = digitalio.DigitalInOut(board.GP16)  # Adjust pin if necessary
+aim.direction = digitalio.Direction.INPUT
+aim.pull = digitalio.Pull.UP
 
 def get_angles():
     """Gets accelerometer angles relative to the Z-axis."""
@@ -54,11 +66,27 @@ def get_pressed_keys(angle_x, angle_y):
     
     return keys
 
-# Wait 5 seconds before starting
+def aim_button():
+    """Function triggered when AIM Button is pressed."""
+    mouse.press(Mouse.RIGHT_BUTTON)
+
+def release_aim():
+    """Function triggered when AIM Button is released."""
+    mouse.release(Mouse.RIGHT_BUTTON)
+
+# Wait 5 seconds before starting (useful for debugging)
+print("Starting in 5 seconds...")
 time.sleep(5)
+print("Started!")
 
 # Main loop
 while True:
+    # Check if AIM Button is pressed
+    if aim.value:
+        aim_button()
+    else:
+        release_aim()
+    
     angle_x, angle_y = get_angles()
     rotation_z = get_rotation()
     current_keys = get_pressed_keys(angle_x, angle_y)
@@ -72,7 +100,8 @@ while True:
         keyboard.release(key)
     
     # Move mouse based on gyroscope Z-axis rotation
-    mouse.move(x=int(-rotation_z * MOUSE_SENSITIVITY))
+    if abs(rotation_z) > GYRO_THRESHOLD:  # Ignore small movements
+        mouse.move(x=int(-rotation_z * MOUSE_SENSITIVITY))
     
     last_keys = current_keys
     time.sleep(SLEEP_TIME)
