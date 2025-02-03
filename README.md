@@ -18,7 +18,7 @@ This project implements a game control system using the **Raspberry Pi Pico / Ra
 - Libraries inside the Raspberry Pi Pico folder.
 
 ## How to Set Up and Run
-1. **Install CircuitPython** on the Raspberry Pi Pico by following [this guide](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython) and placing this [UF2](link).
+1. **Install CircuitPython** on the Raspberry Pi Pico by following [this guide](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython) and placing this [UF2](https://github.com/pedrolucas7i/GyroGameController/raw/refs/heads/main/CircuitPython%209.2.4/adafruit-circuitpython-raspberry_pi_pico-en_US-9.2.4.uf2).
 
 2. **Copy the necessary files** to the Pico.
 
@@ -26,7 +26,7 @@ This project implements a game control system using the **Raspberry Pi Pico / Ra
    - Copy the libraries from the project folder `lib\9.x` to the `lib/` folder on the Pico.
 
 4. **Run the code**:
-   - Save and place the Python code (`main.py`) at the root of the Pico.
+   - Save and place the Python code (`main.py` and `boot.py`) at the root of the Pico.
    - Restart the device (unplug and plug the USB back in) to start the controller.
 
 ## Usage
